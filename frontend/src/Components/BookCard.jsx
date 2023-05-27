@@ -1,15 +1,21 @@
-import {
-  Box,
-  Button,
-  Heading,
-  Image,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Heading, Image, Stack, Text } from "@chakra-ui/react";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { addItemToCart } from "../Redux/Cart/cart.Action";
 
 const BookCard = ({ book }) => {
+  const dispatch = useDispatch();
+
+  const newbook = {
+    ...book,
+    qty: 1,
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addItemToCart(newbook));
+  };
+
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
       <Link to={`/detail/${book.id}`}>
@@ -45,7 +51,7 @@ const BookCard = ({ book }) => {
         }}
         variant="outline"
         mt={4}
-        // onClick={handleLogin}
+        onClick={handleAddToCart}
       >
         Add To Cart
       </Button>
