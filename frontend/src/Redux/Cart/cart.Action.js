@@ -15,7 +15,7 @@ import {
   UPDATE_CART_ITEMS_SUCCESS,
 } from "./cart.ActionType";
 
-export const getCartItems = (data) => async (disptach) => {
+export const getCartItems = () => async (disptach) => {
   disptach({ type: GET_CART_ITEMS_LOADING });
   try {
     let res = axios.get("http://localhost:8080/cartItems");
@@ -49,7 +49,7 @@ export const removeItemFromCart = (cartId) => async (dispatch) => {
   }
 };
 
-export const updateCartItem = (cartId, update) => async (dispatch) => {
+export const updateCartItem = (cartId, qty) => async (dispatch) => {
   dispatch({ type: UPDATE_CART_ITEMS_LOADING });
 
   try {
@@ -58,7 +58,7 @@ export const updateCartItem = (cartId, update) => async (dispatch) => {
     // });
     dispatch({
       type: UPDATE_CART_ITEMS_SUCCESS,
-      payload: { id: cartId, update: update },
+      payload: { id: cartId, qty: qty },
     });
   } catch (error) {
     dispatch({ type: UPDATE_CART_ITEMS_ERROR });
