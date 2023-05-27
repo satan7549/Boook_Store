@@ -2,8 +2,12 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
-import PrivateRoute from "./PriveateRoute";
+import PrivateRoute from "./PrivateRoute";
 import Home from "../Pages/Home";
+import Cart from "../Pages/Cart";
+import BookDetails from "../Pages/BookDetails";
+import CheckOut from "../Pages/CheckOut";
+import Order from "../Pages/Order";
 
 const AllRoutes = () => {
   return (
@@ -15,6 +19,39 @@ const AllRoutes = () => {
         element={
           <PrivateRoute>
             <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/detail/:id"
+        element={
+          <PrivateRoute>
+            <BookDetails />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/checkout"
+        element={
+          <PrivateRoute>
+            <CheckOut />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/order"
+        element={
+          <PrivateRoute>
+            <Order />
           </PrivateRoute>
         }
       />
