@@ -1,17 +1,20 @@
 import { Box, Heading, Image, Stack, Text } from "@chakra-ui/react";
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-
+import { getBookDetail } from "../Redux/Books/books.Action";
 
 const BookDetails = () => {
   const { id } = useParams();
-  const { allBooks } = useSelector((store) => store.books);
+  console.log(id);
+  const dispatch = useDispatch();
+  const { singleBook } = useSelector((store) => store.books);
 
-  const book = allBooks.find((book) => book.id === parseInt(id));
+  useEffect(() => {
+    dispatch(getBookDetail(id));
+  }, []);
 
-  if (!book) {
+  if (!singleBook) {
     return <Box>Book not found.</Box>;
   }
 
@@ -19,25 +22,25 @@ const BookDetails = () => {
     <Box mt={"80px"} p={4}>
       <Stack spacing={4} direction={{ base: "column", md: "row" }}>
         <Image
-          src={book.image}
-          alt={book.title}
+          src={singleBook.image}
+          alt={singleBook.title}
           maxW={{ base: "100%", md: "300px" }}
         />
         <Box>
           <Heading as="h2" size="lg">
-            {book.title}
+            {singleBook.title}
           </Heading>
           <Text fontSize="lg" fontWeight="bold" mt={2}>
-            {book.author}
+            {singleBook.author}
           </Text>
           <Text fontSize="lg" mt={2}>
-            Price: $ {book.price}
+            Price: $ {singleBook.price}
           </Text>
           <Text fontSize="lg" mt={2}>
-            Category: {book.category}
+            Category: {singleBook.category}
           </Text>
           <Text fontSize="lg" mt={2}>
-            Description: {book.description}
+            Description: {singleBook.description}
           </Text>
         </Box>
       </Stack>
