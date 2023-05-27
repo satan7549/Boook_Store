@@ -1,15 +1,38 @@
-import { Container, Flex, HStack, Text, Link, Button } from "@chakra-ui/react";
+import {
+  Text,
+  Flex,
+  Box,
+  HStack,
+  useDisclosure,
+  Stack,
+  IconButton,
+  Container,
+  Button,
+} from "@chakra-ui/react";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { logout } from "../Redux/Auth/Auth.action";
+import { Searchbar } from "./Searchbar";
 
 const Navbar = () => {
-  // Retrieve the current location
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
   const dispatch = useDispatch();
   const { authData } = useSelector((store) => store.auth);
   const { isAuthenticated, token } = authData;
+
+  const Links = [
+    { element: "Home", to: "/" },
+    { element: "Cart", to: "/cart" },
+    { element: "Order", to: "/order" },
+  ];
+
+  const LinksTwo = [
+    { element: "Login", to: "/login" },
+    { element: "Sign Up", to: "/signup" },
+  ];
 
   const handleLogout = async () => {
     dispatch(logout());
@@ -30,87 +53,104 @@ const Navbar = () => {
       zIndex={"10"}
     >
       <Flex h={8} alignItems={"center"} justifyContent={"space-between"}>
+        <IconButton
+          size={"md"}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label={"Open Menu"}
+          display={{ md: "none" }}
+          onClick={isOpen ? onClose : onOpen}
+        />
         <HStack spacing={8} alignItems={"center"}>
           {isAuthenticated || token ? (
             <HStack
               as={"nav"}
               spacing={6}
               justifyContent={"space-between"}
-              display={"flex"}
+              display={{ base: "none", md: "flex" }}
             >
-              <Link
-                to={"/"}
-                as={NavLink}
-                borderBottom={
-                  location.pathname === "/" ? "5px solid" : undefined
-                }
-                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-              >
-                <Text fontSize={"20px"} fontWeight="500">
-                  Home
-                </Text>
-              </Link>
-              <Link
-                to={"/cart"}
-                as={NavLink}
-                borderBottom={
-                  location.pathname === "/cart" ? "5px solid" : undefined
-                }
-                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-              >
-                <Text fontSize={"20px"} fontWeight="500">
-                  Cart
-                </Text>
-              </Link>
-              <Link
-                to={"/order"}
-                as={NavLink}
-                borderBottom={
-                  location.pathname === "/order" ? "5px solid" : undefined
-                }
-                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-              >
-                <Text fontSize={"20px"} fontWeight="500">
-                  Order
-                </Text>
-              </Link>
-              <Button onClick={handleLogout}>Logout</Button>
+              {Links.map((link) => (
+                <NavLink key={link.element} to={link.to}>
+                  <Text
+                    fontSize={"20px"}
+                    fontWeight="500"
+                    borderBottom={
+                      location.pathname === `${link.to}`
+                        ? "5px solid"
+                        : undefined
+                    }
+                    _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+                  >
+                    {link.element}
+                  </Text>
+                </NavLink>
+              ))}
+              <Button onClick={handleLogout}>Logut</Button>
             </HStack>
           ) : (
             <HStack
               as={"nav"}
               spacing={6}
               justifyContent={"space-between"}
-              display={"flex"}
+              display={{ base: "none", md: "flex" }}
             >
-              <Link
-                to={"/login"}
-                as={NavLink}
-                borderBottom={
-                  location.pathname === "/login" ? "5px solid" : undefined
-                }
-                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-              >
-                <Text fontSize={"20px"} fontWeight="500">
-                  Login
-                </Text>
-              </Link>
-              <Link
-                to={"/signup"}
-                as={NavLink}
-                borderBottom={
-                  location.pathname === "/signup" ? "5px solid" : undefined
-                }
-                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-              >
-                <Text fontSize={"20px"} fontWeight="500">
-                  Sign up
-                </Text>
-              </Link>
+              {LinksTwo.map((link) => (
+                <NavLink key={link.element} to={link.to}>
+                  <Text
+                    fontSize={"20px"}
+                    fontWeight="500"
+                    borderBottom={
+                      location.pathname === `${link.to}`
+                        ? "5px solid"
+                        : undefined
+                    }
+                    _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+                  >
+                    {link.element}
+                  </Text>
+                </NavLink>
+              ))}
             </HStack>
           )}
         </HStack>
+        <Box>
+          <Searchbar />
+        </Box>
       </Flex>
+
+      {isOpen ? (
+        <Box pb={4} mt={2} display={{ md: "none" }}>
+          {isAuthenticated || token ? (
+            <Stack as={"nav"} spacing={4}>
+              {Links.map((link) => (
+                <NavLink key={link.element} to={link.to}>
+                  <Text
+                    fontSize={"md"}
+                    fontWeight="semibold"
+                    _hover={{ fontSize: "lg", cursor: "pointer" }}
+                  >
+                    {link.element}
+                  </Text>
+                </NavLink>
+              ))}
+              <Button onClick={handleLogout}>Logut</Button>
+            </Stack>
+          ) : (
+            <Stack as={"nav"} spacing={4}>
+              {LinksTwo.map((link) => (
+                <NavLink key={link.element} to={link.to}>
+                  <Text
+                    fontSize={"md"}
+                    fontWeight="semibold"
+                    _hover={{ fontSize: "lg", cursor: "pointer" }}
+                  >
+                    {link.element}
+                  </Text>
+                </NavLink>
+              ))}
+            </Stack>
+          )}
+        </Box>
+      ) : null}
     </Container>
   );
 };
