@@ -2,6 +2,8 @@ const catchAsyncErrors = require("../middleware/catchAsyncError");
 const userModel = require("../models/userModels");
 const sendToken = require("../utils/jswToken");
 const bcrypt = require("bcrypt");
+
+
 // Register User
 const registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -39,7 +41,6 @@ const userLogin = catchAsyncErrors(async (req, res, next) => {
 
   // Find the user by email
   const userExists = await userModel.findOne({ email });
-
   if (!userExists) {
     return res.status(401).json({
       success: false,
