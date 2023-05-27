@@ -62,7 +62,7 @@ export const cartReducer = (state = cartInitalState, { type, payload }) => {
     }
     case UPDATE_CART_ITEMS_SUCCESS: {
       const newItems = state.cartData.map((ele) => {
-        if (ele.id === payload.id) {
+        if (ele._id === payload.id) {
           return { ...ele, qty: payload.qty };
         } else return ele;
       });
@@ -79,7 +79,7 @@ export const cartReducer = (state = cartInitalState, { type, payload }) => {
       return { ...state, removeCartItem: { loading: true, error: false } };
     }
     case REMOVE_CART_ITEMS_SUCCESS: {
-      const newItems = state.cartData.filter((ele) => ele.id !== payload.id);
+      const newItems = state.cartData.filter((ele) => ele._id !== payload.id);
       return {
         ...state,
         cartData: newItems,

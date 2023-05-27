@@ -32,7 +32,7 @@ export const addItemToCart = (cartInfo) => async (dispatch) => {
     //   ...cartInfo,
     // });
     // let data = res.data;
-
+    
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: cartInfo });
   } catch (error) {
     dispatch({ type: ADD_ITEM_TO_CART_ERROR });

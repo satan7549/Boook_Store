@@ -2,31 +2,41 @@ import {
   Box,
   Button,
   ButtonGroup,
+  HStack,
   Heading,
   Image,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeItemFromCart, updateCartItem } from "../Redux/Cart/cart.Action";
 
 const CartCard = ({ cart }) => {
   const [qty, setQty] = useState(1);
+  const toast = useToast();
 
   const dispatch = useDispatch();
 
   const handleRemove = (id) => {
     dispatch(removeItemFromCart(id));
+    toast({
+      title: "Remove Success.",
+      description: `Remove Item id: ${id} from Cart.`,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   };
 
   const handleIncQty = () => {
     setQty((prev) => prev + 1);
-    dispatch(updateCartItem(cart.id, qty + 1));
+    dispatch(updateCartItem(cart._id, qty + 1));
   };
   const handleDecQty = () => {
     setQty((prev) => prev - 1);
-    dispatch(updateCartItem(cart.id, qty - 1));
+    dispatch(updateCartItem(cart._id, qty - 1));
   };
 
   return (
@@ -49,11 +59,12 @@ const CartCard = ({ cart }) => {
           $ {cart.price}
         </Text>
       </Stack>
-      <ButtonGroup>
+      <HStack >
         <Button onClick={handleDecQty}>-</Button>
         <Button>{cart.qty}</Button>
         <Button onClick={handleIncQty}>+</Button>
-      </ButtonGroup>
+      </HStack>
+
       <Button
         loadingText="Submitting"
         width="full"
@@ -66,7 +77,7 @@ const CartCard = ({ cart }) => {
         }}
         variant="outline"
         mt={4}
-        onClick={() => handleRemove(cart.id)}
+        onClick={() => handleRemove(cart._id)}
       >
         Remove
       </Button>

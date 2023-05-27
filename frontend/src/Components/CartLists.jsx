@@ -17,7 +17,7 @@ const CartLists = ({ cartItems }) => {
       justifyContent="center"
     >
       {cartItems.map((cart) => (
-        <CartCard key={cart.id} cart={cart} />
+        <CartCard key={cart._id} cart={cart} />
       ))}
     </Grid>
   );
