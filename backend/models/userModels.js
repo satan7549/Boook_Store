@@ -26,7 +26,17 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Method to generate a JWT token for the user
+userSchema.methods.getjwtToken = function () {
+  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_SECRET_KEY_EXPIRE,
+  });
+};
 
+// Method to compare the user's password with a provided password
+userSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 // Create the User model
 const UserModel = mongoose.model("user", userSchema);
