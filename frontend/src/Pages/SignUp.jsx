@@ -5,8 +5,12 @@ import {
   Heading,
   Input,
   VStack,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
+  useToast,
+} from "@chakra-ui/react"; 
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { signUp } from "../Redux/Auth/Auth.action";
 
 // Initial state for signup details
 const initState = {
@@ -18,8 +22,11 @@ const initState = {
 const SignUp = () => {
   const [signUPDetails, setSignUPDetails] = useState(initState);
   const { name, email, password } = signUPDetails;
-
-  // const navigate = useNavigate();
+  const { loading, error } = useSelector((store) => store.auth);
+  const { message, isError } = error;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const toast = useToast();
 
   // Handles input change event
   const handleChange = (e) => {
@@ -39,8 +46,21 @@ const SignUp = () => {
     if (name === "" || email === "" || password === "") {
       return alert("fill both credentials");
     }
-    console.log("signup", signUPDetails);
+    dispatch(signUp(signUPDetails));
+    navigate("/login");
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast({
+        title: "Login Failed.",
+        description: `${message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [isError]);
 
   return (
     <Container
@@ -107,6 +127,7 @@ const SignUp = () => {
 
         <FormControl>
           <Button
+            isLoading={loading}
             loadingText="Submitting"
             width="full"
             p={4}

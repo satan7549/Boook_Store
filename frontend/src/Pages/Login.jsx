@@ -5,9 +5,12 @@ import {
   Heading,
   Input,
   VStack,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
-
+} from "@chakra-ui/react"; 
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+import { login } from "../Redux/Auth/Auth.action";
 
 // Initial state for login details
 const initState = {
@@ -18,7 +21,41 @@ const initState = {
 const Login = () => {
   const [loginDetails, setLoginDetails] = useState(initState);
   const { email, password } = loginDetails;
-  
+  const { loading, authData, error } = useSelector((store) => store.auth);
+  const { isAuthenticated } = authData;
+  const { message, isError } = error;
+  const { state } = useLocation();
+  const { from } = state;
+  const toast = useToast();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      toast({
+        title: "Login Success.",
+        description: "Now you can explore.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      if (from) {
+        navigate(from);
+      } else {
+        navigate("/login");
+      }
+    }
+
+    if (isError) {
+      toast({
+        title: "Login Failed.",
+        description: `${message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [isAuthenticated, isError]);
 
   // Handles input change event
   const handleChange = (e) => {
@@ -38,7 +75,11 @@ const Login = () => {
     if (email === "" || password === "") {
       return alert("fill both credentials");
     }
-    console.log("login", loginDetails);
+    dispatch(login(loginDetails));
+  };
+
+  const handleSignUp = () => {
+    navigate("/signup");
   };
 
   return (
@@ -93,6 +134,7 @@ const Login = () => {
 
         <FormControl>
           <Button
+            isLoading={loading}
             loadingText="Submitting"
             width="full"
             p={4}
@@ -107,6 +149,23 @@ const Login = () => {
             onClick={handleLogin}
           >
             LOGIN
+          </Button>
+        </FormControl>
+        <FormControl>
+          <Button
+            width="full"
+            p={4}
+            borderRadius="lg"
+            colorScheme="teal"
+            _hover={{
+              bg: "teal.300",
+              color: "white",
+            }}
+            variant="outline"
+            mt={4}
+            onClick={handleSignUp}
+          >
+            SIGN UP
           </Button>
         </FormControl>
       </VStack>

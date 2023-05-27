@@ -1,22 +1,18 @@
-import {
-  Container,
-  Flex,
-  HStack,
-  Text,
-  Link,
-  Button,
-} from "@chakra-ui/react";
+import { Container, Flex, HStack, Text, Link, Button } from "@chakra-ui/react";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-
+import { logout } from "../Redux/Auth/Auth.action";
 
 const Navbar = () => {
   // Retrieve the current location
   const location = useLocation();
- 
+  const dispatch = useDispatch();
+  const { authData } = useSelector((store) => store.auth);
+  const { isAuthenticated } = authData;
 
   const handleLogout = async () => {
-   console.log("logout")
+    dispatch(logout());
   };
 
   return (
@@ -35,60 +31,84 @@ const Navbar = () => {
     >
       <Flex h={8} alignItems={"center"} justifyContent={"space-between"}>
         <HStack spacing={8} alignItems={"center"}>
-          <HStack
-            as={"nav"}
-            spacing={6}
-            justifyContent={"space-between"}
-            display={"flex"}
-          >
-            <Link
-              to={"/"}
-              as={NavLink}
-              borderBottom={location.pathname === "/" ? "5px solid" : undefined}
-              _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+          {isAuthenticated ? (
+            <HStack
+              as={"nav"}
+              spacing={6}
+              justifyContent={"space-between"}
+              display={"flex"}
             >
-              <Text fontSize={"20px"} fontWeight="500">
-                Home
-              </Text>
-            </Link>
-            <Link
-              to={"/login"}
-              as={NavLink}
-              borderBottom={
-                location.pathname === "/login" ? "5px solid" : undefined
-              }
-              _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+              <Link
+                to={"/"}
+                as={NavLink}
+                borderBottom={
+                  location.pathname === "/" ? "5px solid" : undefined
+                }
+                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+              >
+                <Text fontSize={"20px"} fontWeight="500">
+                  Home
+                </Text>
+              </Link>
+              <Link
+                to={"/cart"}
+                as={NavLink}
+                borderBottom={
+                  location.pathname === "/cart" ? "5px solid" : undefined
+                }
+                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+              >
+                <Text fontSize={"20px"} fontWeight="500">
+                  Cart
+                </Text>
+              </Link>
+              <Link
+                to={"/order"}
+                as={NavLink}
+                borderBottom={
+                  location.pathname === "/order" ? "5px solid" : undefined
+                }
+                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+              >
+                <Text fontSize={"20px"} fontWeight="500">
+                  Order
+                </Text>
+              </Link>
+              <Button onClick={handleLogout}>Logout</Button>
+            </HStack>
+          ) : (
+            <HStack
+              as={"nav"}
+              spacing={6}
+              justifyContent={"space-between"}
+              display={"flex"}
             >
-              <Text fontSize={"20px"} fontWeight="500">
-                Login
-              </Text>
-            </Link>
-            <Link
-              to={"/signup"}
-              as={NavLink}
-              borderBottom={
-                location.pathname === "/signup" ? "5px solid" : undefined
-              }
-              _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-            >
-              <Text fontSize={"20px"} fontWeight="500">
-                Sign up
-              </Text>
-            </Link>
-            {/* <Link
-              to={"/add"}
-              as={NavLink}
-              borderBottom={
-                location.pathname === "/add" ? "5px solid" : undefined
-              }
-              _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-            >
-              <Text fontSize={"20px"} fontWeight="500">
-                Add Inventory
-              </Text>
-            </Link> */}
-            <Button onClick={handleLogout}>Logout</Button>
-          </HStack>
+              <Link
+                to={"/login"}
+                as={NavLink}
+                borderBottom={
+                  location.pathname === "/login" ? "5px solid" : undefined
+                }
+                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+              >
+                <Text fontSize={"20px"} fontWeight="500">
+                  Login
+                </Text>
+              </Link>
+              <Link
+                to={"/signup"}
+                as={NavLink}
+                borderBottom={
+                  location.pathname === "/signup" ? "5px solid" : undefined
+                }
+                _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+              >
+                <Text fontSize={"20px"} fontWeight="500">
+                  Sign up
+                </Text>
+              </Link>
+            </HStack>
+          )}
         </HStack>
       </Flex>
     </Container>
