@@ -6,7 +6,7 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import { authReducer } from "./Auth/Auth.reducer";
-
+ 
 // TODO: use this store variable to create a store.
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

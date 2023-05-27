@@ -31,7 +31,9 @@ export const login = (creds) => async (dispatch) => {
     // const { user, token } = res.data;
     dispatch({ type: LOG_IN_SUCCESS, payload: res.data });
   } catch (error) {
-    dispatch({ type: ERROR_TRUE, payload: error.message });
+    const errorMessage = error.response.data.message;
+    // console.log(errorMessage);
+    dispatch({ type: ERROR_TRUE, payload: errorMessage });
   }
 };
 
@@ -39,9 +41,8 @@ export const login = (creds) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   dispatch({ type: LOADING_TRUE });
   try {
-    const res = await axios.get(`${baseURL}/logout`);
+    // await axios.get(`${baseURL}/logout`);
     dispatch({ type: LOG_OUT_SUCCESS });
-    // console.log(res);
   } catch (error) {
     // console.log(error.message);
     dispatch({ type: ERROR_TRUE, payload: error.message });

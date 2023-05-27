@@ -11,7 +11,7 @@ let token = localStorage.getItem("token");
 
 export const authInitalState = {
   loading: false,
-  data: {
+  authData: {
     token: token ? token : null,
     isAuthenticated: false,
     userDetail: null,
@@ -47,7 +47,7 @@ export const authReducer = (state = authInitalState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        data: {
+        authData: {
           token: token,
           isAuthenticated: true,
           userDetail: user,
@@ -59,7 +59,7 @@ export const authReducer = (state = authInitalState, { type, payload }) => {
       return {
         ...state,
         loading: false,
-        data: {
+        authData: {
           token: null,
           isAuthenticated: false,
           userDetail: null,
