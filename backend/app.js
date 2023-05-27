@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routes/user.route");
+const bookRoutes = require("./routes/book.route");
 
 const app = express();
 
@@ -17,8 +18,8 @@ app.get("/", (req, res) => {
 });
 
 /* import all routes */
-
-
 app.use("/user", userRoutes);
+app.use("/book", bookRoutes);
+
 
 module.exports = app;
