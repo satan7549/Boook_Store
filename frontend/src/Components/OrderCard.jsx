@@ -19,14 +19,15 @@ const OrderCard = ({ item }) => {
       />
       <Stack mt={4}>
         <Heading as="h3" size="md">
-          {item.title}
+          Title: {item.title}
         </Heading>
         <Text fontSize="sm" color="gray.500">
-          {item.author}
+          Author: {item.author}
         </Text>
-        <Text fontSize="sm">{item.description}</Text>
+        <Text fontSize="sm">Description: {item.description}</Text>
+        <Text fontSize="lg">Quantity: {item.qty}</Text>
         <Text fontSize="lg" fontWeight="bold" mt={2}>
-          $ {item.price}
+          Price:- $ {item.price}
         </Text>
       </Stack>
 
@@ -43,7 +44,7 @@ const OrderCard = ({ item }) => {
         }}
         variant="outline"
         mt={4}
-        onClick={() => handleCancleOrder(item.id)}
+        onClick={() => handleCancleOrder(item._id)}
       >
         Cancle
       </Button>
