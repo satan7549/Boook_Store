@@ -9,7 +9,7 @@ const Navbar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { authData } = useSelector((store) => store.auth);
-  const { isAuthenticated } = authData;
+  const { isAuthenticated, token } = authData;
 
   const handleLogout = async () => {
     dispatch(logout());
@@ -31,7 +31,7 @@ const Navbar = () => {
     >
       <Flex h={8} alignItems={"center"} justifyContent={"space-between"}>
         <HStack spacing={8} alignItems={"center"}>
-          {isAuthenticated ? (
+          {isAuthenticated || token ? (
             <HStack
               as={"nav"}
               spacing={6}
