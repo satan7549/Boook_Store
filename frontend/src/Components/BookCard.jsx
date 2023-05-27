@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Heading,
   Image,
   Stack,
@@ -20,7 +19,6 @@ const BookCard = ({ book }) => {
           src={book.image}
           alt={book.title}
         />
-
         <Stack mt={4}>
           <Heading as="h3" size="md">
             {book.title}
