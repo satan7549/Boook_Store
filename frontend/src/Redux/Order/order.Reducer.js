@@ -41,7 +41,6 @@ export const orderReducer = (state = orderInitalState, { type, payload }) => {
       return { ...state, addOrderItem: { loading: true, error: false } };
     }
     case ADD_ORDER_ITEM_TO_SUCCESS: {
-      console.log("OrderInfo", payload);
       return {
         ...state,
         allOrder: [...state.allOrder, ...payload],
@@ -56,7 +55,7 @@ export const orderReducer = (state = orderInitalState, { type, payload }) => {
       return { ...state, removeOrderItem: { loading: true, error: false } };
     }
     case REMOVE_ORDER_ITEMS_SUCCESS: {
-      const newItems = state.allOrder.filter((ele) => ele.id !== payload.id);
+      const newItems = state.allOrder.filter((ele) => ele._id !== payload.id);
       return {
         ...state,
         allOrder: newItems,
