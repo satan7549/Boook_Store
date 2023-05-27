@@ -1,24 +1,41 @@
-import { Box, Button, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addItemToCart } from "../Redux/Cart/cart.Action";
 
 const BookCard = ({ book }) => {
   const dispatch = useDispatch();
-
-  const newbook = {
+  const toast = useToast();
+  const { addCartItem } = useSelector((store) => store.cart);
+  const { loading } = addCartItem;
+  const newItem = {
     ...book,
     qty: 1,
   };
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart(newbook));
+    dispatch(addItemToCart(newItem));
+    toast({
+      title: "Add Success.",
+      description: "Now you can explore Cart.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   };
 
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
-      <Link to={`/detail/${book.id}`}>
+      <Link to={`/detail/${book._id}`}>
         <Image
           margin={"auto"}
           height={"200px"}
@@ -39,8 +56,8 @@ const BookCard = ({ book }) => {
         </Stack>
       </Link>
       <Button
-        // isLoading={loading}
-        loadingText="Submitting"
+        isLoading={loading}
+        loadingText="Add to Cart"
         width="full"
         p={4}
         borderRadius="lg"
