@@ -5,7 +5,7 @@ import {
   Heading,
   Input,
   VStack,
-} from "@chakra-ui/react"; 
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -25,37 +25,10 @@ const Login = () => {
   const { isAuthenticated } = authData;
   const { message, isError } = error;
   const { state } = useLocation();
-  const { from } = state;
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      toast({
-        title: "Login Success.",
-        description: "Now you can explore.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      if (from) {
-        navigate(from);
-      } else {
-        navigate("/login");
-      }
-    }
-
-    if (isError) {
-      toast({
-        title: "Login Failed.",
-        description: `${message}`,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  }, [isAuthenticated, isError]);
 
   // Handles input change event
   const handleChange = (e) => {
@@ -76,6 +49,30 @@ const Login = () => {
       return alert("fill both credentials");
     }
     dispatch(login(loginDetails));
+    if (isAuthenticated) {
+      toast({
+        title: "Login Success.",
+        description: "Now you can explore.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      if (state !== null) {
+        navigate(state);
+      } else {
+        navigate("/");
+      }
+    }
+
+    if (isError) {
+      toast({
+        title: "Login Failed.",
+        description: `${message}`,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
 
   const handleSignUp = () => {
