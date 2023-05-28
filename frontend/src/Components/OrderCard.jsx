@@ -1,54 +1,50 @@
-import { Box, Button, Heading, Image, Stack, Text } from "@chakra-ui/react";
+import { CloseButton, Grid, Image, Text, useToast } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeMoveOrderItem } from "../Redux/Order/order.Action";
 
 const OrderCard = ({ item }) => {
   const dispatch = useDispatch();
+  const toast = useToast();
+
   const handleCancleOrder = (id) => {
     dispatch(removeMoveOrderItem(id));
+    toast({
+      title: "Cancle Success.",
+      description: `Order Item id: ${id}.`,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   };
 
   return (
-    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
+    <Grid
+      templateColumns="repeat(4, 1fr)"
+      alignItems="center"
+      justifyContent={"space-between"}
+      p={4}
+      width={"full"}
+      gap={2}
+      mb={2}
+     boxShadow={"lg"}
+    >
       <Image
-        margin={"auto"}
-        height={"200px"}
-        src={item.image}
+        width={"100px"}
+        height={"100px"}
         alt={item.title}
+        src={item.image}
       />
-      <Stack mt={4}>
-        <Heading as="h3" size="md">
-          Title: {item.title}
-        </Heading>
-        <Text fontSize="sm" color="gray.500">
-          Author: {item.author}
-        </Text>
-        <Text fontSize="sm">Description: {item.description}</Text>
-        <Text fontSize="lg">Quantity: {item.qty}</Text>
-        <Text fontSize="lg" fontWeight="bold" mt={2}>
-          Price:- $ {item.price}
-        </Text>
-      </Stack>
-
-      <Button
-        // isLoading={loading}
-        loadingText="Submitting"
-        width="full"
-        p={4}
-        borderRadius="lg"
-        colorScheme="teal"
-        _hover={{
-          bg: "teal.300",
-          color: "red",
-        }}
+      <Text>{item.title}</Text>
+      <Text>{item.qty}</Text>
+      <CloseButton
+        bg={"red.500"}
+        border={"1px"}
+        size="md"
         variant="outline"
-        mt={4}
         onClick={() => handleCancleOrder(item._id)}
-      >
-        Cancle
-      </Button>
-    </Box>
+      />
+    </Grid>
   );
 };
 

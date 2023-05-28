@@ -1,25 +1,22 @@
-import { Grid } from "@chakra-ui/react";
 import React from "react";
 import OrderCard from "./OrderCard";
+import { Box, Heading, Stack } from "@chakra-ui/react";
 
 const OrderLists = ({ orders }) => {
   return (
-    <Grid
-      mt={"80px"}
-      templateColumns={{
-        base: "1fr",
-        sm: "repeat(2, 1fr)",
-        md: "repeat(3, 1fr)",
-        lg: "repeat(4, 1fr)",
-      }}
-      gap={4}
-      p={2}
-      justifyContent="center"
-    >
-      {orders.map((item) => (
-        <OrderCard key={item._id} item={item} />
-      ))}
-    </Grid>
+    <Box width={"full"} p={4} height={"100vh"} mt={"70px"} >
+      <Heading as="h1" mb={4}>
+        Orders
+      </Heading>
+
+      <Stack
+        spacing={4}
+      >
+        {orders.map((order, i) => (
+          <OrderCard key={i} item={order} />
+        ))}
+      </Stack>
+    </Box>
   );
 };
 

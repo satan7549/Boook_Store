@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import { logout } from "../Redux/Auth/Auth.action";
 import { Searchbar } from "./Searchbar";
+import FilterComponent from "./FilterComponent";
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,57 +62,36 @@ const Navbar = () => {
           onClick={isOpen ? onClose : onOpen}
         />
         <HStack spacing={8} alignItems={"center"}>
-          {isAuthenticated || token ? (
-            <HStack
-              as={"nav"}
-              spacing={6}
-              justifyContent={"space-between"}
-              display={{ base: "none", md: "flex" }}
-            >
-              {Links.map((link) => (
-                <NavLink key={link.element} to={link.to}>
-                  <Text
-                    fontSize={"20px"}
-                    fontWeight="500"
-                    borderBottom={
-                      location.pathname === `${link.to}`
-                        ? "5px solid"
-                        : undefined
-                    }
-                    _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-                  >
-                    {link.element}
-                  </Text>
-                </NavLink>
-              ))}
-              <Button onClick={handleLogout}>Logut</Button>
-            </HStack>
-          ) : (
-            <HStack
-              as={"nav"}
-              spacing={6}
-              justifyContent={"space-between"}
-              display={{ base: "none", md: "flex" }}
-            >
-              {LinksTwo.map((link) => (
-                <NavLink key={link.element} to={link.to}>
-                  <Text
-                    fontSize={"20px"}
-                    fontWeight="500"
-                    borderBottom={
-                      location.pathname === `${link.to}`
-                        ? "5px solid"
-                        : undefined
-                    }
-                    _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
-                  >
-                    {link.element}
-                  </Text>
-                </NavLink>
-              ))}
-            </HStack>
-          )}
+          <HStack
+            as={"nav"}
+            spacing={6}
+            justifyContent={"space-between"}
+            display={{ base: "none", md: "flex" }}
+          >
+            {Links.map((link) => (
+              <NavLink key={link.element} to={link.to}>
+                <Text
+                  fontSize={"20px"}
+                  fontWeight="500"
+                  borderBottom={
+                    location.pathname === `${link.to}` ? "5px solid" : undefined
+                  }
+                  _hover={{ borderBottom: "5px solid", cursor: "pointer" }}
+                >
+                  {link.element}
+                </Text>
+              </NavLink>
+            ))}
+            {isAuthenticated ||
+              (token && <Button onClick={handleLogout}>Logut</Button>)}
+          </HStack>
         </HStack>
+        {location.pathname === "/" ? (
+          <Box>
+            <FilterComponent />
+          </Box>
+        ) : null}
+
         <Box>
           <Searchbar />
         </Box>

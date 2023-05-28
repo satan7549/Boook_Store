@@ -18,8 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSearchBooks } from "../Redux/Books/books.Action";
 import { NavLink } from "react-router-dom";
+import { getSearchBooks } from "../Redux/Books/books.Action";
 
 export const Searchbar = () => {
   const [query, setQuery] = useState("");
@@ -32,7 +32,6 @@ export const Searchbar = () => {
     dispatch(getSearchBooks(query));
   }, [query]);
 
-  console.log("search Result", searchResult);
 
   const handleClose = () => {
     onClose();
@@ -64,7 +63,7 @@ export const Searchbar = () => {
               />
             </InputGroup>
           </DrawerBody>
-          {searchResult.length > 0 ? (
+          {searchResult.length > 0 && query !== "" && (
             <DrawerFooter>
               <Box
                 width="full"
@@ -76,11 +75,11 @@ export const Searchbar = () => {
                 overflowY="scroll"
               >
                 {searchResult &&
-                  searchResult.map((ele) => {
+                  searchResult.map((ele,i) => {
                     return (
                       <NavLink
                         to={`/detail/${ele._id}`}
-                        key={ele.id}
+                        key={i}
                         onClick={onClose}
                       >
                         <Card
@@ -107,7 +106,7 @@ export const Searchbar = () => {
                   })}
               </Box>
             </DrawerFooter>
-          ) : null}
+          )}
         </DrawerContent>
       </Drawer>
     </>
