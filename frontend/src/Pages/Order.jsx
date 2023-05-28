@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import OrderLists from "../Components/OrderLists";
 import { useSelector } from "react-redux";
-// import { getAllOrdes } from "../Redux/Order/order.Action";
+import EmptyCard from "../Components/EmptyCard";
+
 
 const Order = () => {
   const { allOrder } = useSelector((store) => store.order);
-  //   const dispatch = useDispatch();
 
-  //   useEffect(() => {
-  //     dispatch(getAllOrdes());
-  //   }, []);
-  console.log("orderPage", allOrder);
+  if (allOrder.length < 1) return <EmptyCard name={"order"} />;
   return <OrderLists orders={allOrder} />;
 };
 
