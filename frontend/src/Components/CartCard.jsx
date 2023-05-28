@@ -2,19 +2,20 @@ import {
   Box,
   Button,
   ButtonGroup,
-  HStack,
-  Heading,
+  CloseButton,
   Image,
-  Stack,
+  Td,
   Text,
+  Tr,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeItemFromCart, updateCartItem } from "../Redux/Cart/cart.Action";
+import { NavLink } from "react-router-dom";
 
 const CartCard = ({ cart }) => {
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(cart.qty);
   const toast = useToast();
 
   const dispatch = useDispatch();
@@ -31,57 +32,84 @@ const CartCard = ({ cart }) => {
   };
 
   const handleIncQty = () => {
-    setQty((prev) => prev + 1);
-    dispatch(updateCartItem(cart._id, qty + 1));
+    setQty(qty + 1);
   };
   const handleDecQty = () => {
-    setQty((prev) => prev - 1);
-    dispatch(updateCartItem(cart._id, qty - 1));
+    setQty(qty - 1);
   };
 
-  return (
-    <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
-      <Image
-        margin={"auto"}
-        height={"200px"}
-        src={cart.image}
-        alt={cart.title}
-      />
-      <Stack mt={4}>
-        <Heading as="h3" size="md">
-          {cart.title}
-        </Heading>
-        <Text fontSize="sm" color="gray.500">
-          {cart.author}
-        </Text>
-        <Text fontSize="sm">{cart.description}</Text>
-        <Text fontSize="lg" fontWeight="bold" mt={2}>
-          $ {cart.price}
-        </Text>
-      </Stack>
-      <HStack >
-        <Button onClick={handleDecQty}>-</Button>
-        <Button>{cart.qty}</Button>
-        <Button onClick={handleIncQty}>+</Button>
-      </HStack>
+  useEffect(() => {
+    dispatch(updateCartItem(cart._id, qty));
+  }, [qty]);
 
-      <Button
-        loadingText="Submitting"
-        width="full"
-        p={4}
-        borderRadius="lg"
-        colorScheme="teal"
-        _hover={{
-          bg: "teal.300",
-          color: "white",
-        }}
-        variant="outline"
-        mt={4}
-        onClick={() => handleRemove(cart._id)}
-      >
-        Remove
-      </Button>
-    </Box>
+  return (
+    <Tr>
+      <Td>
+        <NavLink to={`/products/${cart._id}`}>
+          <Box
+            width="100%"
+            height="100%"
+            display="flex"
+            flexDirection={{ base: "column", md: "row" }}
+            alignItems={{
+              base: "center",
+              md: "stretch",
+              lg: "center",
+            }}
+            gap={{ base: "10px", md: "20px" }}
+          >
+            <Image
+              width={{ base: "100%", md: "100px" }}
+              height={{ base: "100px", md: "100px" }}
+              src={cart.image}
+              alt={cart.title}
+            />
+            <Box width="100%" textAlign={{ base: "center", md: "center" }}>
+              <Text as="h1">{cart.title}</Text>
+            </Box>
+          </Box>
+        </NavLink>
+      </Td>
+      <Td>$ {cart.price}</Td>
+      <Td>
+        <ButtonGroup
+          display="flex"
+          flexDir={{
+            lg: "row",
+            md: "row",
+            sm: "column",
+            base: "column",
+          }}
+          alignItems="center"
+          justifyContent={{
+            base: "space-between",
+            md: "flex-start",
+          }}
+          gap={"5px"}
+        >
+          <Button
+            colorScheme="teal"
+            variant="solid"
+            disabled={cart.qty < 1}
+            onClick={handleDecQty}
+          >
+            -
+          </Button>
+          <Button variant="solid">
+            <Text as="h1" mx={{ base: "10px", md: "20px" }}>
+              {cart.qty}
+            </Text>
+          </Button>
+          <Button colorScheme="teal" variant="solid" onClick={handleIncQty}>
+            +
+          </Button>
+        </ButtonGroup>
+      </Td>
+      <Td isNumeric>{cart.price * cart.qty}</Td>
+      <Td>
+        <CloseButton size="md" onClick={() => handleRemove(cart._id)} />
+      </Td>
+    </Tr>
   );
 };
 
