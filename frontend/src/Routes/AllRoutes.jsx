@@ -6,9 +6,10 @@ import PrivateRoute from "./PrivateRoute";
 import Home from "../Pages/Home";
 import Cart from "../Pages/Cart";
 import BookDetails from "../Pages/BookDetails";
-import CheckOut from "../Pages/CheckOut";
 import Order from "../Pages/Order";
+import CheckOut from "../Pages/CheckOut";
 
+// Component defining all the routes for the application
 const AllRoutes = () => {
   return (
     <Routes>
@@ -17,17 +18,17 @@ const AllRoutes = () => {
       <Route
         path="/"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <Home />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
       <Route
         path="/detail/:id"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <BookDetails />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
       <Route
@@ -38,7 +39,6 @@ const AllRoutes = () => {
           </PrivateRoute>
         }
       />
-
       <Route
         path="/checkout"
         element={
@@ -46,7 +46,7 @@ const AllRoutes = () => {
             <CheckOut />
           </PrivateRoute>
         }
-      />
+      />{" "}
       <Route
         path="/order"
         element={
