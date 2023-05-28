@@ -2,7 +2,9 @@
 
 This is an interactive Bookstore application built using ReactJS. The application allows users to browse and search for books, view book details, add books to a shopping cart, and place an order.
 
-## App Deployed Link:- https://frontend-5a8h0l1j3-satan7549.vercel.app/
+## Fronted Deployed Link:- https://frontend-5a8h0l1j3-satan7549.vercel.app/
+
+## Backend Deployed Link:- https://witty-puffer.cyclic.app/
 
 ## Table of Contents
 - [Usage](#usage)
@@ -11,7 +13,6 @@ This is an interactive Bookstore application built using ReactJS. The applicatio
 - [Image Privew](#Image-Preview)
 - [Contributing](#contributing)
 - [License](#license)
-
 
 
 ## Usage
@@ -44,6 +45,8 @@ The Bookstore application includes the following features:
 
 The Bookstore application is built using the following technologies:
 
+### Fronted Technologies 
+
 - ReactJS
 
 - React Router Dom
@@ -51,6 +54,19 @@ The Bookstore application is built using the following technologies:
 - Redux
 
 - Chakra-UI
+
+### Backend Technologies 
+
+- Node JS
+- Express JS
+- Mongodb 
+- Bcrypt
+- JWT Token
+
+## For Deployment Hoisting website 
+- cyclic :- For Backend 
+- Vercel :- For Fronted 
+
 
 ## Image Preview 
 
