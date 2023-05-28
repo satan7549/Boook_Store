@@ -10,7 +10,6 @@ const catchAsyncErrors = (theFunc) => (req, res, next) => {
     }
 
     // If it's not a duplicate key error, handle it with the default error handler
-    // next(err);
     res.status(400).send({ msg: "Something went wrong", err: err.message });
   });
 };

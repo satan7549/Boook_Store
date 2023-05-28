@@ -3,7 +3,6 @@ const userModel = require("../models/userModels");
 const sendToken = require("../utils/jswToken");
 const bcrypt = require("bcrypt");
 
-
 // Register User
 const registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -32,6 +31,7 @@ const registerUser = catchAsyncErrors(async (req, res, next) => {
 const userLogin = catchAsyncErrors(async (req, res, next) => {
   const { email, password } = req.body;
 
+  // If Email or Password is not provided
   if (!email || !password) {
     return res.status(400).json({
       success: false,
@@ -44,7 +44,7 @@ const userLogin = catchAsyncErrors(async (req, res, next) => {
   if (!userExists) {
     return res.status(401).json({
       success: false,
-      message: "Invalid Email or Password",
+      message: "User Not Exists! You have to Sign Up",
     });
   }
 
@@ -65,7 +65,6 @@ const userLogin = catchAsyncErrors(async (req, res, next) => {
 // Get All Users
 const getAllUsers = catchAsyncErrors(async (req, res, next) => {
   try {
-    // console.log("req", req.use
     res.status(200).json({
       success: true,
       message: "sucess route complete",

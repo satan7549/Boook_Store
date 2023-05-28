@@ -1,33 +1,36 @@
 const mongoose = require("mongoose");
 
+// Define the Mongoose schema for the "book" collection
 const bookSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, "please enter book title"],
+    required: [true, "Please enter the book title"],
     trim: true,
   },
   author: {
     type: String,
-    required: [true, "please enter book author"],
+    required: [true, "Please enter the book author"],
     trim: true,
   },
   price: {
     type: Number,
-    require: [true, "please enter price"],
-    maxLength: [4, "year can't exceed 4 characters"],
+    required: [true, "Please enter the price"],
+    maxLength: [4, "Year can't exceed 4 characters"],
   },
   image: [String],
   category: {
     type: String,
-    require: [true, "please enter book category"],
+    required: [true, "Please enter the book category"],
   },
   description: {
     type: String,
-    required: [true, "please enter movie synopsis"],
+    required: [true, "Please enter the book description"],
   },
-  createAt: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
 });
 
+// Create the Mongoose model for the "book" collection using the bookSchema
 const bookModel = mongoose.model("book", bookSchema);
 
+// Export the bookModel to be used in other parts of the application
 module.exports = bookModel;
