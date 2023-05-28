@@ -47,6 +47,13 @@ const SignUp = () => {
       return alert("fill both credentials");
     }
     dispatch(signUp(signUPDetails));
+    toast({
+      title: "Sign Up Success.",
+      description: "Now you can Login.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
     navigate("/login");
   };
 
