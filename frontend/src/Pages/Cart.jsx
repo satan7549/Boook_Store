@@ -1,29 +1,22 @@
 import React from "react";
 import CartLists from "../Components/CartLists";
-import { Box, Button, VStack } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { addOrderItems } from "../Redux/Order/order.Action";
+import {  useSelector } from "react-redux";
 import Loading from "../Components/Loading";
-// import { getCartItems } from "../Redux/Cart/cart.Action";
+import EmptyCard from "../Components/EmptyCard";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { getCartItems, cartData } = useSelector((store) => store.cart);
-  const { loading } = getCartItems;
-  console.log(cartData);
-  const dispatch = useDispatch();
+  const { cartData } = useSelector((store) => store.cart);
+  const navigate = useNavigate();
 
   const handleOrder = () => {
-    dispatch(addOrderItems(cartData));
+    navigate("/checkout");
   };
-  if (loading) return <Loading />;
-  return (
-    <VStack h={"100vh"}>
-      <CartLists cartItems={cartData} />
-      <Box position={"fixed"} bottom={"10px"} right={"10px"} zIndex={"10"}>
-        <Button onClick={handleOrder}>place an order</Button>
-      </Box>
-    </VStack>
-  );
+
+  if (!cartData) return <Loading />;
+  if (cartData.length < 1) return <EmptyCard name={"cart"} />;
+
+  return <CartLists cartItems={cartData} handleOrder={handleOrder}/>;
 };
 
 export default Cart;
