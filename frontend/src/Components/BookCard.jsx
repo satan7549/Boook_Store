@@ -15,23 +15,38 @@ import { addItemToCart } from "../Redux/Cart/cart.Action";
 const BookCard = ({ book }) => {
   const dispatch = useDispatch();
   const toast = useToast();
-  const { addCartItem } = useSelector((store) => store.cart);
+  const { addCartItem, cartData } = useSelector((store) => store.cart);
   const { loading } = addCartItem;
+
   const newItem = {
     ...book,
     qty: 1,
   };
 
   const handleAddToCart = () => {
-    dispatch(addItemToCart(newItem));
-    toast({
-      title: "Add Success.",
-      description: "Now you can explore Cart.",
-      status: "success",
-      duration: 9000,
-      isClosable: true,
-    });
+    const isItemInCart = cartData.find((item) => item._id === newItem._id);
+
+    if (isItemInCart) {
+      toast({
+        title: "Add Failed.",
+        description: "Item already in Cart.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      dispatch(addItemToCart(newItem));
+      toast({
+        title: "Add Success.",
+        description: "Now you can explore Cart.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
+
+
 
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
