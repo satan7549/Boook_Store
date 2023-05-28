@@ -10,6 +10,7 @@ import {
   REMOVE_CART_ITEMS_ERROR,
   REMOVE_CART_ITEMS_LOADING,
   REMOVE_CART_ITEMS_SUCCESS,
+  RESET_CART_ITEMS,
   UPDATE_CART_ITEMS_ERROR,
   UPDATE_CART_ITEMS_LOADING,
   UPDATE_CART_ITEMS_SUCCESS,
@@ -25,12 +26,9 @@ export const getCartItems = () => async (disptach) => {
   }
 };
 
-
-
-
 export const addItemToCart = (cartInfo) => async (dispatch) => {
   dispatch({ type: ADD_ITEM_TO_CART_LOADING });
-  try {  
+  try {
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: cartInfo });
   } catch (error) {
     dispatch({ type: ADD_ITEM_TO_CART_ERROR });
@@ -54,6 +52,17 @@ export const updateCartItem = (cartId, qty) => async (dispatch) => {
       payload: { id: cartId, qty: qty },
     });
   } catch (error) {
+    dispatch({ type: UPDATE_CART_ITEMS_ERROR });
+  }
+};
+
+export const cartRest = () => (dispatch) => {
+  dispatch({ type: UPDATE_CART_ITEMS_LOADING });
+  try {
+    dispatch({
+      type: RESET_CART_ITEMS,
+    });
+  } catch (err) {
     dispatch({ type: UPDATE_CART_ITEMS_ERROR });
   }
 };

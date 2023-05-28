@@ -12,12 +12,9 @@ import {
   GET_SEARCH_BOOKS_ERROR,
   GET_SEARCH_BOOKS_LOADING,
   GET_SEARCH_BOOKS_SUCCESS,
-  GET_SORT_BOOKS_ERROR,
-  GET_SORT_BOOKS_LOADING,
-  GET_SORT_BOOKS_SUCCESS,
 } from "./books.ActionType";
 
-const baseURL = "http://localhost:8080/book";
+const baseURL = "https://witty-puffer.cyclic.app/book";
 
 export const getBooks = () => async (dispatch) => {
   dispatch({ type: GET_BOOKS_LOADING });

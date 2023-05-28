@@ -25,6 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AddIcon } from "@chakra-ui/icons";
 import { addOrderItems } from "../Redux/Order/order.Action";
 import { useNavigate } from "react-router-dom";
+import { cartRest } from "../Redux/Cart/cart.Action";
 
 const initialAddress = {
   city: "",
@@ -71,7 +72,7 @@ const CheckOut = () => {
         title: "Please fill Address.",
         description: `Address is required for delivery`,
         status: "error",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     }
@@ -80,10 +81,11 @@ const CheckOut = () => {
       title: "Order Success.",
       description: `Order Amount $:- ${total}`,
       status: "success",
-      duration: 9000,
+      duration: 2000,
       isClosable: true,
     });
     navigate("/order");
+    dispatch(cartRest());
   };
 
   const totalItems = cartData.length;

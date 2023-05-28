@@ -82,8 +82,9 @@ const Navbar = () => {
                 </Text>
               </NavLink>
             ))}
-            {isAuthenticated ||
-              (token && <Button onClick={handleLogout}>Logut</Button>)}
+            {isAuthenticated || token ? (
+              <Button onClick={handleLogout}>Logut</Button>
+            ) : null}
           </HStack>
         </HStack>
         {location.pathname === "/" ? (

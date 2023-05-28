@@ -11,9 +11,6 @@ import {
   GET_SEARCH_BOOKS_ERROR,
   GET_SEARCH_BOOKS_LOADING,
   GET_SEARCH_BOOKS_SUCCESS,
-  GET_SORT_BOOKS_ERROR,
-  GET_SORT_BOOKS_LOADING,
-  GET_SORT_BOOKS_SUCCESS,
 } from "./books.ActionType";
 
 // Note: Do not update/change the initial state
@@ -103,7 +100,7 @@ export const bookReducer = (state = productInitalState, { type, payload }) => {
         singleBook: payload,
       };
     }
- 
+
     case GET_FILTER_BOOKS_LOADING: {
       return {
         ...state,

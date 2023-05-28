@@ -13,7 +13,7 @@ const OrderCard = ({ item }) => {
       title: "Cancle Success.",
       description: `Order Item id: ${id}.`,
       status: "success",
-      duration: 9000,
+      duration: 2000,
       isClosable: true,
     });
   };

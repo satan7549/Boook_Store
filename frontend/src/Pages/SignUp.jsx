@@ -51,7 +51,7 @@ const SignUp = () => {
       title: "Sign Up Success.",
       description: "Now you can Login.",
       status: "success",
-      duration: 9000,
+      duration: 2000,
       isClosable: true,
     });
     navigate("/login");
@@ -63,7 +63,7 @@ const SignUp = () => {
         title: "Login Failed.",
         description: `${message}`,
         status: "error",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     }

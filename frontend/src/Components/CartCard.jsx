@@ -1,18 +1,16 @@
 import {
-  Box,
   Button,
   ButtonGroup,
   CloseButton,
+  Grid,
+  GridItem,
   Image,
-  Td,
   Text,
-  Tr,
   useToast,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { removeItemFromCart, updateCartItem } from "../Redux/Cart/cart.Action";
-import { NavLink } from "react-router-dom";
 
 const CartCard = ({ cart }) => {
   const [qty, setQty] = useState(cart.qty);
@@ -26,7 +24,7 @@ const CartCard = ({ cart }) => {
       title: "Remove Success.",
       description: `Remove Item id: ${id} from Cart.`,
       status: "success",
-      duration: 9000,
+      duration: 2000,
       isClosable: true,
     });
   };
@@ -34,6 +32,7 @@ const CartCard = ({ cart }) => {
   const handleIncQty = () => {
     setQty(qty + 1);
   };
+
   const handleDecQty = () => {
     setQty(qty - 1);
   };
@@ -43,73 +42,73 @@ const CartCard = ({ cart }) => {
   }, [qty]);
 
   return (
-    <Tr>
-      <Td>
-        <NavLink to={`/products/${cart._id}`}>
-          <Box
-            width="100%"
-            height="100%"
-            display="flex"
-            flexDirection={{ base: "column", md: "row" }}
-            alignItems={{
-              base: "center",
-              md: "stretch",
-              lg: "center",
-            }}
-            gap={{ base: "10px", md: "20px" }}
-          >
-            <Image
-              width={{ base: "100%", md: "100px" }}
-              height={{ base: "100px", md: "100px" }}
-              src={cart.image}
-              alt={cart.title}
-            />
-            <Box width="100%" textAlign={{ base: "center", md: "center" }}>
-              <Text as="h1">{cart.title}</Text>
-            </Box>
-          </Box>
-        </NavLink>
-      </Td>
-      <Td>$ {cart.price}</Td>
-      <Td>
+    <Grid
+      templateColumns="repeat(4, 1fr)"
+      alignItems="center"
+      justifyContent={"space-between"}
+      p={4}
+      width={"full"}
+      gap={2}
+      mb={2}
+      boxShadow={"lg"}
+    >
+      <GridItem>
+        <Image
+          width={"100px"}
+          height={"100px"}
+          alt={cart.title}
+          src={cart.image}
+        />
+      </GridItem>
+      <GridItem>
+        <Text m={"auto"} as={"p"} fontSize={"lg"}>
+          Director:-{" "}
+          {cart.title.length < 8 ? cart.title : `${cart.title.slice(0, 8)}...`}
+        </Text>
+      </GridItem>
+      <GridItem>
         <ButtonGroup
           display="flex"
           flexDir={{
-            lg: "row",
-            md: "row",
-            sm: "column",
             base: "column",
+            sm: "row",
           }}
           alignItems="center"
-          justifyContent={{
-            base: "space-between",
-            md: "flex-start",
-          }}
-          gap={"5px"}
+          gap="5px"
         >
           <Button
+            isDisabled={cart.qty <= 1}
             colorScheme="teal"
             variant="solid"
-            disabled={cart.qty < 1}
             onClick={handleDecQty}
+            size={"sm"}
           >
             -
           </Button>
-          <Button variant="solid">
-            <Text as="h1" mx={{ base: "10px", md: "20px" }}>
-              {cart.qty}
-            </Text>
+          <Button variant="solid" size={"sm"}>
+            {cart.qty}
           </Button>
-          <Button colorScheme="teal" variant="solid" onClick={handleIncQty}>
+          <Button
+            isDisabled={cart.qty > 9}
+            colorScheme="teal"
+            variant="solid"
+            size={"sm"}
+            onClick={handleIncQty}
+          >
             +
           </Button>
         </ButtonGroup>
-      </Td>
-      <Td isNumeric>{cart.price * cart.qty}</Td>
-      <Td>
-        <CloseButton size="md" onClick={() => handleRemove(cart._id)} />
-      </Td>
-    </Tr>
+      </GridItem>
+      <GridItem>
+        <CloseButton
+          bg={"red.500"}
+          border={"1px"}
+          size="md"
+          variant="outline"
+          onClick={() => handleRemove(cart._id)}
+        />
+      </GridItem>
+    </Grid>
   );
 };
 

@@ -6,7 +6,7 @@ import {
   Input,
   VStack,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
@@ -28,7 +28,6 @@ const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   // Handles input change event
   const handleChange = (e) => {
@@ -54,11 +53,11 @@ const Login = () => {
         title: "Login Success.",
         description: "Now you can explore.",
         status: "success",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
       if (state !== null) {
-        navigate(state);
+        navigate(state, { replace: true });
       } else {
         navigate("/");
       }
@@ -69,7 +68,7 @@ const Login = () => {
         title: "Login Failed.",
         description: `${message}`,
         status: "error",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     }

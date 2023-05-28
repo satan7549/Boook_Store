@@ -8,11 +8,11 @@ import {
   REMOVE_CART_ITEMS_ERROR,
   REMOVE_CART_ITEMS_LOADING,
   REMOVE_CART_ITEMS_SUCCESS,
+  RESET_CART_ITEMS,
   UPDATE_CART_ITEMS_ERROR,
   UPDATE_CART_ITEMS_LOADING,
   UPDATE_CART_ITEMS_SUCCESS,
 } from "./cart.ActionType";
-
 
 // Note: Do not update/change the initial state
 const cartInitalState = {
@@ -40,7 +40,6 @@ export const cartReducer = (state = cartInitalState, { type, payload }) => {
       return { ...state, getCartItems: { loading: true, error: false } };
     }
     case GET_CART_ITEMS_SUCCESS: {
-      
       return { ...state, cartData: payload, getCartItems: { loading: false } };
     }
     case GET_CART_ITEMS_ERROR: {
@@ -90,6 +89,9 @@ export const cartReducer = (state = cartInitalState, { type, payload }) => {
     }
     case REMOVE_CART_ITEMS_ERROR: {
       return { ...state, removeCartItem: { loading: false, error: true } };
+    }
+    case RESET_CART_ITEMS: {
+      return cartInitalState;
     }
     default: {
       return state;

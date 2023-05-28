@@ -31,7 +31,7 @@ const BookCard = ({ book }) => {
         title: "Add Failed.",
         description: "Item already in Cart.",
         status: "error",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     } else {
@@ -40,13 +40,11 @@ const BookCard = ({ book }) => {
         title: "Add Success.",
         description: "Now you can explore Cart.",
         status: "success",
-        duration: 9000,
+        duration: 2000,
         isClosable: true,
       });
     }
   };
-
-
 
   return (
     <Box borderWidth="1px" borderRadius="lg" overflow="hidden" p={4}>
@@ -58,13 +56,17 @@ const BookCard = ({ book }) => {
           alt={book.title}
         />
         <Stack mt={4}>
-          <Heading as="h3" size="md">
+          <Heading as="h3" size="md" height={"20px"}>
             {book.title}
           </Heading>
           <Text fontSize="sm" color="gray.500">
             {book.author}
           </Text>
-          <Text fontSize="sm">{book.description}</Text>
+          <Text m={"auto"} as={"p"} fontSize={"lg"}>
+            {book.description.length < 8
+              ? book.description
+              : `${book.description.slice(0, 8)}...`}
+          </Text>
           <Text fontSize="lg" fontWeight="bold" mt={2}>
             $ {book.price}
           </Text>
@@ -72,6 +74,7 @@ const BookCard = ({ book }) => {
       </Link>
       <Button
         isLoading={loading}
+        isDisabled={cartData.find((item) => item._id === newItem._id)}
         loadingText="Add to Cart"
         width="full"
         p={4}
