@@ -5,9 +5,15 @@ import {
   GET_BOOK_DETAILS_ERROR,
   GET_BOOK_DETAILS_LOADING,
   GET_BOOK_DETAILS_SUCCESS,
+  GET_FILTER_BOOKS_ERROR,
+  GET_FILTER_BOOKS_LOADING,
+  GET_FILTER_BOOKS_SUCCESS,
   GET_SEARCH_BOOKS_ERROR,
   GET_SEARCH_BOOKS_LOADING,
   GET_SEARCH_BOOKS_SUCCESS,
+  GET_SORT_BOOKS_ERROR,
+  GET_SORT_BOOKS_LOADING,
+  GET_SORT_BOOKS_SUCCESS,
 } from "./books.ActionType";
 
 // Note: Do not update/change the initial state
@@ -16,6 +22,7 @@ const productInitalState = {
   error: false,
   allBooks: [],
   searchResult: [],
+  filterData: [],
   singleBook: {},
 };
 
@@ -76,7 +83,6 @@ export const bookReducer = (state = productInitalState, { type, payload }) => {
         searchResult: searchResult,
       };
     }
-
     case GET_BOOK_DETAILS_LOADING: {
       return {
         ...state,
@@ -95,6 +101,35 @@ export const bookReducer = (state = productInitalState, { type, payload }) => {
         ...state,
         loading: false,
         singleBook: payload,
+      };
+    }
+ 
+    case GET_FILTER_BOOKS_LOADING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+
+    case GET_FILTER_BOOKS_ERROR: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case GET_FILTER_BOOKS_SUCCESS: {
+      let filteredBooks = [];
+      if (payload !== "") {
+        filteredBooks = state.allBooks.filter(
+          (book) => book.category === payload
+        );
+      } else {
+        filteredBooks = [...state.allBooks];
+      }
+      return {
+        ...state,
+        loading: false,
+        filterData: filteredBooks,
       };
     }
 

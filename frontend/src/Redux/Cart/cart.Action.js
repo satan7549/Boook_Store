@@ -25,14 +25,12 @@ export const getCartItems = () => async (disptach) => {
   }
 };
 
+
+
+
 export const addItemToCart = (cartInfo) => async (dispatch) => {
   dispatch({ type: ADD_ITEM_TO_CART_LOADING });
-  try {
-    // let res = await axios.post("http://localhost:8080/cartItems", {
-    //   ...cartInfo,
-    // });
-    // let data = res.data;
-    
+  try {  
     dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: cartInfo });
   } catch (error) {
     dispatch({ type: ADD_ITEM_TO_CART_ERROR });
@@ -42,7 +40,6 @@ export const addItemToCart = (cartInfo) => async (dispatch) => {
 export const removeItemFromCart = (cartId) => async (dispatch) => {
   dispatch({ type: REMOVE_CART_ITEMS_LOADING });
   try {
-    // let res = await axios.delete(`http://localhost:8080/cartItems/${cartId}`);
     dispatch({ type: REMOVE_CART_ITEMS_SUCCESS, payload: { id: cartId } });
   } catch (error) {
     dispatch({ type: REMOVE_CART_ITEMS_ERROR });
@@ -51,11 +48,7 @@ export const removeItemFromCart = (cartId) => async (dispatch) => {
 
 export const updateCartItem = (cartId, qty) => async (dispatch) => {
   dispatch({ type: UPDATE_CART_ITEMS_LOADING });
-
   try {
-    // let res = await axios.patch(`http://localhost:8080/cartItems/${cartId}`, {
-    //   ...update,
-    // });
     dispatch({
       type: UPDATE_CART_ITEMS_SUCCESS,
       payload: { id: cartId, qty: qty },

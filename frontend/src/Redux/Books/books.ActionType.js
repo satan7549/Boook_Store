@@ -13,5 +13,7 @@ export const GET_SEARCH_BOOKS_LOADING = "seaarch/books/loading";
 export const GET_SEARCH_BOOKS_SUCCESS = "seaarch/books/success";
 export const GET_SEARCH_BOOKS_ERROR = "seaarch/books/error";
 
-// // Reset
-// export const RESET_BOOKS = "books/reset";
+// Filter buy Category
+export const GET_FILTER_BOOKS_LOADING = "filter/books/loading";
+export const GET_FILTER_BOOKS_SUCCESS = "filter/books/success";
+export const GET_FILTER_BOOKS_ERROR = "filter/books/error";

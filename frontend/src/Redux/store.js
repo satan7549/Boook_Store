@@ -1,18 +1,17 @@
 import {
   applyMiddleware,
   combineReducers,
-  compose,
   legacy_createStore,
 } from "redux";
 import thunk from "redux-thunk";
+//Redux-persist
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import { authReducer } from "./Auth/Auth.reducer";
 import { bookReducer } from "./Books/books.reducer";
 import { cartReducer } from "./Cart/cart.Reducer";
 import { orderReducer } from "./Order/order.Reducer";
-
-// TODO: use this store variable to create a store.
-
-const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -21,9 +20,15 @@ const rootReducer = combineReducers({
   order: orderReducer,
 });
 
-// Note: you can delete the line below, but remember to create a new store variable
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = legacy_createStore(
-  rootReducer,
-  composerEnhancer(applyMiddleware(thunk))
+  persistedReducer,
+  applyMiddleware(thunk)
 );
+export const persistor = persistStore(store);

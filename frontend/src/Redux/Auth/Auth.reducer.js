@@ -3,6 +3,7 @@ import {
   LOADING_TRUE,
   LOG_IN_SUCCESS,
   LOG_OUT_SUCCESS,
+  SIGN_UP_SUCCESS,
 } from "./Auth.actionType";
 
 // Note: Do not update/change the initial state
@@ -39,6 +40,12 @@ export const authReducer = (state = authInitalState, { type, payload }) => {
           isError: true,
           message: payload,
         },
+      };
+    }
+    case SIGN_UP_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
       };
     }
     case LOG_IN_SUCCESS: {

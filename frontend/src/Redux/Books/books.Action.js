@@ -6,9 +6,15 @@ import {
   GET_BOOK_DETAILS_ERROR,
   GET_BOOK_DETAILS_LOADING,
   GET_BOOK_DETAILS_SUCCESS,
+  GET_FILTER_BOOKS_ERROR,
+  GET_FILTER_BOOKS_LOADING,
+  GET_FILTER_BOOKS_SUCCESS,
   GET_SEARCH_BOOKS_ERROR,
   GET_SEARCH_BOOKS_LOADING,
   GET_SEARCH_BOOKS_SUCCESS,
+  GET_SORT_BOOKS_ERROR,
+  GET_SORT_BOOKS_LOADING,
+  GET_SORT_BOOKS_SUCCESS,
 } from "./books.ActionType";
 
 const baseURL = "http://localhost:8080/book";
@@ -28,7 +34,6 @@ export const getBookDetail = (id) => async (dispatch) => {
   dispatch({ type: GET_BOOK_DETAILS_LOADING });
   try {
     let res = await axios.get(`${baseURL}/${id}`);
-
     const { book } = res.data;
     dispatch({ type: GET_BOOK_DETAILS_SUCCESS, payload: book });
   } catch (error) {
@@ -36,7 +41,7 @@ export const getBookDetail = (id) => async (dispatch) => {
   }
 };
 
-export const getSearchBooks = (query) => (dispatch) => {
+export const getSearchBooks = (query) => async (dispatch) => {
   dispatch({ type: GET_SEARCH_BOOKS_LOADING });
   try {
     dispatch({ type: GET_SEARCH_BOOKS_SUCCESS, payload: query });
@@ -44,3 +49,12 @@ export const getSearchBooks = (query) => (dispatch) => {
     dispatch({ type: GET_SEARCH_BOOKS_ERROR });
   }
 };
+export const getBooksbyFilter = (category) => async (dispatch) => {
+  dispatch({ type: GET_FILTER_BOOKS_LOADING });
+  try {
+    dispatch({ type: GET_FILTER_BOOKS_SUCCESS, payload: category });
+  } catch (error) {
+    dispatch({ type: GET_FILTER_BOOKS_ERROR });
+  }
+};
+

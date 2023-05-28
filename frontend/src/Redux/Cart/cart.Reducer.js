@@ -13,6 +13,7 @@ import {
   UPDATE_CART_ITEMS_SUCCESS,
 } from "./cart.ActionType";
 
+
 // Note: Do not update/change the initial state
 const cartInitalState = {
   getCartItems: {
@@ -39,6 +40,7 @@ export const cartReducer = (state = cartInitalState, { type, payload }) => {
       return { ...state, getCartItems: { loading: true, error: false } };
     }
     case GET_CART_ITEMS_SUCCESS: {
+      
       return { ...state, cartData: payload, getCartItems: { loading: false } };
     }
     case GET_CART_ITEMS_ERROR: {
