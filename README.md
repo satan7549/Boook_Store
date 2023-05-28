@@ -71,8 +71,5 @@ The Bookstore application is built using the following technologies:
 
 Contributions to the Bookstore application are welcome. If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. Please ensure that your contributions adhere to the coding conventions and guidelines.
 
-## License
 
-The Bookstore application is open-source and distributed under the [MIT License](https://opensource.org/licenses/MIT). Feel free to modify and use the code as per the
-
- terms of the license.
+The Bookstore app
