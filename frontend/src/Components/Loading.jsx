@@ -2,7 +2,10 @@ import { Box, Image } from "@chakra-ui/react";
 
 const Loading = () => {
   return (
-    <Box style={{ width: "100vw", height: "100vh", background: "black" }}>
+    <Box
+      mt={"50px"}
+      style={{ width: "100vw", height: "100vh", background: "black" }}
+    >
       <Image
         style={{
           margin: "auto",
